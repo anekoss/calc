@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        System.out.println(calc(s));
+    }
+
+    public static String calc(String input) {
+        int sign1 = input.indexOf(" ");
+        int sign2 = input.indexOf(" ", sign1 + 1);
+        boolean r = true;
+        int res;
+        String one = input.substring(0, sign1).trim();
+        String two = input.substring(sign2).trim();
+        String sign = input.substring(sign1 + 1, sign2).trim();
+        if (Number.convertToArab(one) != -1 && Number.convertToArab(two) != -1) {
+            sign1 = Number.convertToArab(one);
+            sign2 = Number.convertToArab(two);
+        } else if (Integer.parseInt(one) * Integer.parseInt(two) <= 100) {
+            sign1 = Integer.parseInt(one);
+            sign2 = Integer.parseInt(two);
+            r = false;
+        }
+        switch (sign) {
+            case "*": {
+                res = sign1 * sign2;
+                break;
+            }
+            case "/": {
+                res = sign1 / sign2;
+                break;
+            }
+            case "-": {
+                res = sign1 - sign2;
+                break;
+            }
+            case "+": {
+                res = sign1 + sign2;
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unexpected value: " + sign);
+        }
+        if (!r) {
+            return String.valueOf(res);
+        }
+        return Number.converToRim(res);
+    }
+}
